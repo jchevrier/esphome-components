@@ -9,11 +9,22 @@
 namespace esphome {
 namespace benq {
 
-typedef void(*cmd_cb)(std::string);
-
+class Benq;
 class BenqCallback {
 public:
   virtual void feed_command_back(std::string data);
+};
+
+template <class T>
+class BenqGeneric : public Component, public T, public BenqCallback {
+public:
+
+  void set_benq_parent(Benq *parent) { this->parent_ = parent; }
+  void set_benq_command(std::string cmd) { this->command_ = cmd; }
+
+ protected:
+  Benq *parent_;
+  std::string command_;
 };
 
 class Benq : public PollingComponent, public uart::UARTDevice {
