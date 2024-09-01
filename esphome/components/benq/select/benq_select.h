@@ -16,7 +16,7 @@ class BenqSelect : public BenqGeneric<select::Select> {
   void set_optimistic(bool optimistic) { this->optimistic_ = optimistic; }
   void set_select_id(uint8_t select_id) { this->select_id_ = select_id; }
   void set_select_mappings(std::vector<std::string> mappings) { this->mappings_ = std::move(mappings); }
-  void feed_command_back(std::string data) override;
+  void feed_command_back(std::string &data) override;
 
  protected:
   void control(const std::string &value) override;

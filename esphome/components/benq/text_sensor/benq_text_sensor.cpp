@@ -10,7 +10,7 @@ void BenqTextSensor::setup() {
   parent_->register_command(this->command_, this);
 }
 
-void BenqTextSensor::feed_command_back(std::string data) {
+void BenqTextSensor::feed_command_back(std::string &data) {
   this->publish_state(data);
 }
 void BenqTextSensor::dump_config() {

@@ -15,7 +15,7 @@ class BenqSwitch : public BenqGeneric<switch_::Switch> {
   void set_switch_id(uint8_t switch_id) { this->switch_id_ = switch_id; }
   void set_on_value(std::string on) { this->on_ = on; }
   void set_off_value(std::string off) { this->off_ = off; }
-  void feed_command_back(std::string data) override;
+  void feed_command_back(std::string &data) override;
   void set_repeat_off_value(bool repeat) { this->repeat_off_ = repeat; }
 
  protected:

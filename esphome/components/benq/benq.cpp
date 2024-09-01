@@ -48,7 +48,8 @@ int Benq::readline(int readch, char *buffer, int len) {
 void Benq::update() {
   for (auto const& component: this->cmd_list) {
     auto name = component.first;
-    cmd_pump.push(name + "=?");
+    auto myCmd = name + "=?";
+    send_command(myCmd);
   }
 }
 void Benq::loop() {
@@ -99,7 +100,7 @@ void Benq::register_command(std::string cmd, BenqCallback *cb) {
   this->cmd_list[cmd] = cb; 
 }
 
-void Benq::send_command(std::string cmd) {
+void Benq::send_command(std::string &cmd) {
   if (cmd_pump.size() < max_queue_size) {
     cmd_pump.push(cmd);
   } else {

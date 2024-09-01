@@ -17,7 +17,7 @@ const int max_queue_size = 20;
 class Benq;
 class BenqCallback {
 public:
-  virtual void feed_command_back(std::string data);
+  virtual void feed_command_back(std::string &data);
 };
 
 template <class T>
@@ -40,15 +40,15 @@ public:
   void setup() override;
   void dump_config() override;
   void register_command(std::string cmd, BenqCallback* child);
-  void send_command(std::string cmd);
-  int readline(int readch, char*buffer, int len);
+  void send_command(std::string &cmd);
 
 protected:
-  void write_to_uart(std::string cmd);
-  std::map<std::string, BenqCallback*> cmd_list;
-  std::string str;
 
 private:
+  std::map<std::string, BenqCallback*> cmd_list;
+  std::string str;
+  void write_to_uart(std::string cmd);
+  int readline(int readch, char*buffer, int len);
   bool cmd_ready;
   std::time_t last_ready;
   std::queue<std::string> cmd_pump;

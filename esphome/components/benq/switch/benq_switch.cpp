@@ -18,7 +18,7 @@ void BenqSwitch::write_state(bool state) {
   }
 }
 
-void BenqSwitch::feed_command_back(std::string data) {
+void BenqSwitch::feed_command_back(std::string &data) {
   if(data.compare(this->on_) == 0) {
     this->publish_state(true);
   }

@@ -6,7 +6,7 @@ namespace benq {
 
 static const char *const TAG = "benq.number";
 
-void BenqNumber::feed_command_back(std::string data) {
+void BenqNumber::feed_command_back(std::string &data) {
   if (data.empty())
     return;
 
@@ -18,7 +18,8 @@ void BenqNumber::feed_command_back(std::string data) {
 }
 
 void BenqNumber::control(float value) {
-  this->parent_->send_command(this->command_ + "=" + std::to_string(int(value)));
+  auto myCmd = this->command_ + "=" + std::to_string(int(value));
+  this->parent_->send_command(myCmd);
 }
 void BenqNumber::setup() {
   parent_->register_command(this->command_, this);

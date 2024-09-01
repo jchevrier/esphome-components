@@ -13,7 +13,7 @@ class BenqNumber : public BenqGeneric<number::Number> {
   void setup() override;
   void dump_config() override;
   void set_number_id(uint8_t number_id) { this->number_id_ = number_id; }
-  void feed_command_back(std::string data) override;
+  void feed_command_back(std::string &data) override;
 
  protected:
   void control(float value) override;

@@ -11,7 +11,7 @@ void BenqSensor::setup() {
   parent_->register_command(this->command_, this);
 }
 
-void BenqSensor::feed_command_back(std::string data) {
+void BenqSensor::feed_command_back(std::string &data) {
   if (data.empty())
     return;
 
