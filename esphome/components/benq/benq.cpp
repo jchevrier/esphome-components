@@ -80,7 +80,8 @@ void Benq::loop() {
     }
   }
 
-  if ((!cmd_ready) && ( std::difftime(std::time(nullptr), last_ready) > 10.0 ))
+  if ((!cmd_ready) &&
+    ( std::difftime(std::time(nullptr), last_ready) > this->retry_timeout_ ))
   {
     ESP_LOGI(TAG, "Retry sending commands");
     cmd_ready = true;

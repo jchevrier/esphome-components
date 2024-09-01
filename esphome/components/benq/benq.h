@@ -41,10 +41,12 @@ public:
   void dump_config() override;
   void register_command(std::string cmd, BenqCallback* child);
   void send_command(std::string &cmd);
+  void set_retry_timeout_value(uint8_t value) { this->retry_timeout_ = value; }
 
 protected:
 
 private:
+  uint8_t retry_timeout_;
   std::map<std::string, BenqCallback*> cmd_list;
   std::string str;
   void write_to_uart(std::string cmd);
