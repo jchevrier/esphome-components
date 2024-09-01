@@ -19,9 +19,7 @@ class BenqSelect : public BenqGeneric<select::Select> {
   void feed_command_back(std::string data) override;
 
  protected:
-  //TODO
-  // void control(const std::string &value) override;
-  void control(const std::string &value) {};
+  void control(const std::string &value) override;
 
   bool optimistic_ = false;
   uint8_t select_id_;

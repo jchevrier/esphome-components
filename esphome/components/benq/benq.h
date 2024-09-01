@@ -5,9 +5,14 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <queue>
+#include <ctime>
 
 namespace esphome {
 namespace benq {
+
+const int max_line_length = 80;
+const int max_queue_size = 20;
 
 class Benq;
 class BenqCallback {
@@ -22,13 +27,13 @@ public:
   void set_benq_parent(Benq *parent) { this->parent_ = parent; }
   void set_benq_command(std::string cmd) { this->command_ = cmd; }
 
- protected:
+protected:
   Benq *parent_;
   std::string command_;
 };
 
 class Benq : public PollingComponent, public uart::UARTDevice {
- public:
+public:
   void loop() override;
 
   void update() override;
@@ -37,11 +42,18 @@ class Benq : public PollingComponent, public uart::UARTDevice {
   void register_command(std::string cmd, BenqCallback* child);
   void send_command(std::string cmd);
   int readline(int readch, char*buffer, int len);
-  
- protected:
+
+protected:
   void write_to_uart(std::string cmd);
   std::map<std::string, BenqCallback*> cmd_list;
   std::string str;
+
+private:
+  bool cmd_ready;
+  std::time_t last_ready;
+  std::queue<std::string> cmd_pump;
+  char buffer[max_line_length];
+  int pos;
 };
 
 }  // namespace benq

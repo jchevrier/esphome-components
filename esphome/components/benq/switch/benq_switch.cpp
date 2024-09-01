@@ -19,7 +19,6 @@ void BenqSwitch::write_state(bool state) {
 }
 
 void BenqSwitch::feed_command_back(std::string data) {
-  ESP_LOGD("benq", "data: %s", data.c_str());
   if(data.compare(this->on_) == 0) {
     this->publish_state(true);
   }
