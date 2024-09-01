@@ -1,0 +1,90 @@
+esphome:
+  name: projector
+  friendly_name: projector
+
+# Add here:
+# Base configuration of you Esphome project
+# (board, wifi/ethernet connection, logging, passwords and key, etc...)
+
+# Use the repo and component
+external_components:
+  - source:
+      type: git
+      url: https://github.com/jchevrier/esphome-components
+      ref: main
+    components: [benq]
+
+# First it requires the UART to be used
+uart:
+  id: projector_uart
+  baud_rate: 115200
+  tx_pin: GPIO4
+  rx_pin: GPIO36
+
+# Instantiate the base component
+benq:
+  id: projector
+  uart_id: projector_uart
+  update_interval: 10s
+
+# For every component that is a UART command, the benq component
+# shall be refered as the platform
+switch:
+  - platform: benq
+    benq_id: projector
+    name: "Projector Power Status"
+    id: projector_power
+    command: "pow"
+    on_value: "ON"
+    off_value: "OFF"
+    # For the TH575 projector, the OFF command shall be repeated to actually turn it off
+    repeat_off: true
+
+sensor:
+  - platform: benq
+    benq_id: projector
+    name: "Projector Lamp Hours"
+    id: projector_ltim
+    command: ltim
+
+text_sensor:
+  - platform: benq
+    benq_id: projector
+    name: "Projector Model"
+    id: projector_model
+    command: "modelname"
+  - platform: benq
+    benq_id: projector
+    name: "Projector SW version"
+    id: projector_sw_version
+    command: "sysfwversion"
+
+number:
+  - platform: benq
+    benq_id: projector
+    name: "Projector volume"
+    id: projector_volume
+    command: "vol"
+    max_value: 20
+    min_value: 0
+    step: 1
+    icon: "mdi:volume-high"
+  - platform: benq
+    benq_id: projector
+    name: "Projector brightness"
+    id: projector_brightness
+    command: "bri"
+    max_value: 100
+    min_value: 0
+    step: 1
+
+select:
+  - platform: benq
+    benq_id: projector
+    name: "Projector source"
+    id: projector_source
+    command: "sour"
+    options:
+      - "HDMI"
+      - "HDMI2"
+
