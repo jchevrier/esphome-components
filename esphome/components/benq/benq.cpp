@@ -79,8 +79,10 @@ void Benq::loop() {
       }
     }
   }
-  if ((!cmd_ready) && (std::difftime(last_ready, std::time(nullptr)) > 10.0 ))
+
+  if ((!cmd_ready) && ( std::difftime(std::time(nullptr), last_ready) > 10.0 ))
   {
+    ESP_LOGI(TAG, "Retry sending commands");
     cmd_ready = true;
     last_ready = std::time(nullptr);
   }
